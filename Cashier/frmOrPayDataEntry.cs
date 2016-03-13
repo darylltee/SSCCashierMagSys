@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Cashier.classes;
+//using Shortcut;
 
 namespace Cashier
 {
@@ -18,24 +19,46 @@ namespace Cashier
         public static string paymentType;
 
         public static string dbAction;
+        //private readonly HotkeyBinder hotkeyBinder = new HotkeyBinder();
 
         private static frmOrPayManageData.MsgHandler modRefreshData;
         private static int[] seqNo;
         private static int tuitionMarker;
+
+        public bool isTuitionFee = false;
        
         public frmOrPayDataEntry()
         {
             InitializeComponent();
             tPaymentOrNo.Text = OrderOfPayment.getLastOPNo();
             new clsDB().Con().FillCombobox(cmbParticular, "SELECT AssessmentName FROM assessment");
+
+            // ***** HOTKEYS *******
+            //hotkeyBinder.Bind(Modifiers.Control, Keys.P).To(showPayor);
+            //hotkeyBinder.Bind(Modifiers.Control, Keys.I).To(showParticulars);
+            // ***** END OF HOTKEYS *******
         }
 
-        private void showHelp(Form f)
+        // ---------- HOTKEY EVENTS --------
+        private void showPayor(Form f)
         {
             f.ShowDialog();
         }
+        private void showParticulars()
+        {
+            btnAddParticular_Click_1(null, null);
+        }
 
 
+        // --------- END OF HOTKEY EVENTS --------
+
+
+
+
+        private  void showPayor()
+        {
+            btnPayor_Click(null, null);
+        }
 
         //  "show as" functions
 
@@ -60,7 +83,7 @@ namespace Cashier
             }
       
 
-            f.showHelp(f);
+            f.showPayor(f);
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -74,12 +97,13 @@ namespace Cashier
                     OrderOfPayment OP = null;
                     StudentAccount SAccount = new StudentAccount();
                     Dictionary<string, float> amountPerParticular = SAccount.getAmountPerParticular(lvDataEntryOP,2);
-                    string payor = tbFirstname.Text + " " + tbMiddlename.Text + " " + tbLastname.Text;
+                    string payor = tbFirstname.Text.Replace("'","''") + " " + tbMiddlename.Text + " " + tbLastname.Text;
 
                     int orderOfPaymentType = 0 ;
                     try
                     {
                         orderOfPaymentType = int.Parse((mrbUndergrad.Checked) ? mrbUndergrad.Tag.ToString() : (mrbMasteral.Checked) ? mrbMasteral.Tag.ToString() : (mrbFiduciary.Checked) ? mrbFiduciary.Tag.ToString() : (mrbBtr.Checked) ? mrbBtr.Tag.ToString() : (mrbIGD.Checked) ? mrbIGD.Tag.ToString() : "0" );
+                        paymentType = (mtrbCash.Checked) ? mtrbCash.Tag.ToString() : (mtrbCheck.Checked) ? mtrbCheck.Tag.ToString() : "0";
                     }
                     catch (Exception ex)
                     {
@@ -87,35 +111,49 @@ namespace Cashier
                         MessageBox.Show(ex.Message);
                     }
 
-                    // Check if it a Payor Type
-                    if (lbStudID.Text == "[ Student ID ]")
+                    // check payment type
+                    // check if has student ID
+                    int studentID = 0;
+                    if(lbStudID.Text != "[ Student ID ]")
+                        studentID = int.Parse(lbStudID.Text);
+
+                    string purpose = "Other Fees";
+
+                    // Purpose
+                    if (isTuitionFee)
                     {
-                        if (Payor.isPayorStudent(tbFirstname.Text, tbMiddlename.Text, tbLastname.Text))
-                            MessageBox.Show("Payor is a student : Please load the payor in the list");
-                        else
-                        {     
-                            OP = new OrderOfPayment(float.Parse(tAmount.Text), int.Parse(tPaymentOrNo.Text), dtOrDate.Value.ToShortDateString(), "Tuition Fee/Misc", payor, 0);
+                        purpose = "Tuition Fee/Misc";
+                    }
+
+                    // has check details
+                    if (Payor.validateCheckDetails(mtbBankName.Text, mtbCheckNo.Text, mtdCheckDate.Value.ToShortDateString(), mtbCheckAmount.Text) && mtrbCheck.Checked)
+                    {
+                        OP = new OrderOfPayment(float.Parse(tAmount.Text), int.Parse(tPaymentOrNo.Text), dtOrDate.Value.ToShortDateString(), purpose, payor, studentID, tbRemarks.Text, mtbBankName.Text, mtbCheckNo.Text, mtdCheckDate.Value.ToShortDateString(), float.Parse(mtbCheckAmount.Text),int.Parse(paymentType));
+                    }
+                    else if (mtrbCash.Checked)
+                        OP = new OrderOfPayment(float.Parse(tAmount.Text), int.Parse(tPaymentOrNo.Text), dtOrDate.Value.ToShortDateString(), purpose, payor, studentID, tbRemarks.Text, null, null, null, 0, int.Parse(paymentType));
+                    else
+                        MessageBox.Show("There are some fields missing!");
+                    // final validation
+                    if (OP != null)
+                    {
+                        if (OP.createOP())
+                        {
+                            OP.addOPItem(int.Parse(tPaymentOrNo.Text), amountPerParticular, orderOfPaymentType);
+                            MessageBox.Show("Successful! \n \t Please Proceed to Payment");
+
+                            Dictionary<string, string> OPData = OP.getOPDataWOOR(int.Parse(tPaymentOrNo.Text));
+                            ePrinting print = new ePrinting(OPData);
+                            print.ePrint("OP");
+
+                            this.Dispose();
+                            frmOrPayDataEntry  temp  = new frmOrPayDataEntry();
+                            temp.ShowDialog();
+
+
                         }
                     }
-                    else
-                    {
-                        OP = new OrderOfPayment(float.Parse(tAmount.Text), int.Parse(tPaymentOrNo.Text), dtOrDate.Value.ToShortDateString(), "Tuition Fee/Misc", null, int.Parse(lbStudID.Text));
-                    }
                     
-                    // final
-                    if (OP.createOP())
-                    {
-                        OP.addOPItem(int.Parse(tPaymentOrNo.Text), amountPerParticular, orderOfPaymentType);
-                        MessageBox.Show("Successful! \n \t Please Proceed to Payment");
-
-                        Dictionary<string, string> OPData = OP.getOPDataWOOR(int.Parse(tPaymentOrNo.Text));
-                        ePrinting print = new ePrinting(OPData);
-                        print.ePrint("OP");
-
-
-                        Close();
-
-                    }
                 }
                 else
                 {
@@ -126,31 +164,7 @@ namespace Cashier
             {
                 MessageBox.Show("Please add an item");
             }
-          /*
-            isValid = cStudentAccount.validateAmout(paymentType, totalFee, paymentAmount, tuitionFee, mscFee);
-
-            // ---------------- FINAL PROCEDURE -------------------
-            if (isValid)
-            {
-                OrderOfPayment OP = new OrderOfPayment(paymentAmount, int.Parse(studentData[0]), int.Parse(tPaymentOrNo.Text), dtOrDate.Value.ToShortDateString());
-
-                if (OP.createOP())
-                {
-                    OP.addOPItem(int.Parse(tPaymentOrNo.Text), amountPerParticular);
-                    //StudentAccount.updatePayment(seqNo, tuitionSeqNo, paymentAmount, int.Parse(studentData[0]), mscFee, semNo);
-                    
-                    MessageBox.Show("Successful! \n \t Please Proceed to Payment");
-
-                    frmOrderOfPaymentPrint OPPrint = new frmOrderOfPaymentPrint(0, int.Parse(tPaymentOrNo.Text));
-                    OPPrint.ShowDialog();
-                    Close();
-
-                }
-           
-               
-            }
-           * 
-           * */
+          
            
         }
 
@@ -175,26 +189,39 @@ namespace Cashier
             f.ShowDialog();
             string[][] data = f.checkedItems;
             string[] col = new string[f.listView1.Columns.Count];
-            for (int i = 0; i < f.listView1.Columns.Count; i++)
+
+            if (f.listView1.CheckedItems.Count > 0)
             {
-                col[i] = f.listView1.Columns[i].Text;
-            }
-            try
-            {
-                if (new clsDB().Con().listViewTransferData(data, lvDataEntryOP, col))
+                for (int i = 0; i < f.listView1.Columns.Count; i++)
                 {
-                    f.Close();
+                    col[i] = f.listView1.Columns[i].Text;
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+                try
+                {
+                    if (new clsDB().Con().listViewTransferData(data, lvDataEntryOP, col))
+                    {
+                        f.Close();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
 
-            float[] account = Payor.computeAccount(lvDataEntryOP);
-
-            lbTotal.Text = Convert.ToString(account[1]);
-            tAmount.Text = Convert.ToString(account[1]);
+                try
+                {
+                    float[] account = Payor.computeAccount(lvDataEntryOP);
+                    lbTotal.Text = Convert.ToString(account[1]);
+                    tAmount.Text = Convert.ToString(account[1]);
+                }
+                catch (Exception ex)
+                {
+                    lvDataEntryOP.Items.Clear();
+                    MessageBox.Show("Particular Has no Amount");
+                }
+               
+            }
+            
 
         }
 
@@ -224,9 +251,17 @@ namespace Cashier
                         {
                             data[0] = obj;
                             // check if the amount is zero and ask for input
-                            if (float.Parse(data[0][2]) == 0)
+                            if (float.Parse(data[0][2]) == 0 || data[0][1] == "Tuition Fee")
                             {
                                 frmParticularAmountDataEntry f = new frmParticularAmountDataEntry(int.Parse(data[0][0]));
+                                
+                                // FLAG for TUITION FEE
+                                if (data[0][1] == "Tuition Fee")
+                                {
+                                    f.isTuitionFee = true;
+                                    isTuitionFee = true;
+                                }
+                                
                                 f.ShowDialog();
                                 data[0][2] = Convert.ToString(f.amount);
                                 hasAmount = f.hasAmount;
@@ -238,17 +273,25 @@ namespace Cashier
                             {
                                 float[] account = Payor.computeAccount(lvDataEntryOP);
 
+                                // Set TEMPORARY FIX for TUITION PAYMENT - G
+
+                                lbTotal.Text = Convert.ToString(account[0] + account[1]);
+                                tAmount.Text = Convert.ToString(account[0] + account[1]);
+                              
+                                /**
                                 lbTotal.Text = Convert.ToString(account[1]);
                                 tAmount.Text = Convert.ToString(account[1]);
+                                 */
                             }
                         }
-
+                       
                     }
                     else
                     {
                         pNewParticular.Visible = true;
                     }
                 }
+               
             }
             catch (Exception ex)
             {
@@ -262,15 +305,24 @@ namespace Cashier
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            new clsDB().Con().listViewRemoveSelectedIndex(lvDataEntryOP);
-           
-            float[] account = Payor.computeAccount(lvDataEntryOP);
+            try
+            {
 
-            lbTotal.Text = Convert.ToString(account[1]);
-            tAmount.Text = Convert.ToString(account[1]);
 
-            lvDataEntryOP.Items[lvDataEntryOP.Items.Count - 1].Focused = true;
-            lvDataEntryOP.Items[lvDataEntryOP.Items.Count - 1].Selected = true;
+                new clsDB().Con().listViewRemoveSelectedIndex(lvDataEntryOP);
+
+                float[] account = Payor.computeAccount(lvDataEntryOP);
+
+                lbTotal.Text = Convert.ToString(account[1]);
+                tAmount.Text = Convert.ToString(account[1]);
+
+                lvDataEntryOP.Items[lvDataEntryOP.Items.Count - 1].Focused = true;
+                lvDataEntryOP.Items[lvDataEntryOP.Items.Count - 1].Selected = true;
+            }
+            catch (Exception ex)
+            {
+                // Test
+            }
         }
 
         private void btnPayor_Click(object sender, EventArgs e)
@@ -290,6 +342,9 @@ namespace Cashier
                 tbMiddlename.ReadOnly = true;
                 tbLastname.ReadOnly = true;
                 btnReset.Visible = true;
+
+                // focus next item
+                cmbParticular.Focus();
             }
            
 
@@ -325,23 +380,101 @@ namespace Cashier
             {
                 if (Helper.IsNumeric(tbNewParticularAmount.Text))
                 {
-                    string query = "INSERT INTO particulars (particular, amount,shortDescription) VALUES ('" + cmbParticular.Text + "',  " + tbNewParticularAmount.Text + ",'" + tbNewParticularShortDesc.Text + "')";
+                    string query = "INSERT INTO assessment (AssessmentName, amount,ShortName) VALUES ('" + cmbParticular.Text + "',  " + tbNewParticularAmount.Text + ",'" + tbNewParticularShortDesc.Text + "')";
 
                     if (new clsDB().Con().ExecuteSql(query))
                     {
                         MessageBox.Show("Particular Added");
                         btnNewParticularExit_Click(null, null);
-                        new clsDB().Con().FillCombobox(cmbParticular, "SELECT particular FROM particulars");
+                        new clsDB().Con().FillCombobox(cmbParticular, "SELECT AssessmentName FROM assessment");
                     }
                 }
             }
+            else
+                MessageBox.Show("There is an empty Field");
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+ 
+        private void cmbParticular_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //btnNewParticular(
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                MessageBox.Show("test");
+                btnAddParticular_Click_1(null, null);
+            }
         }
+
+
+
+        private void mtrbCash_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (mtrbCheck.Checked)
+                lvDataEntryOP.Height -= 76;
+        }
+
+        private void mtrbCheck_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (mtrbCash.Checked)
+                lvDataEntryOP.Height += 76;
+        }
+
+        private void cmbParticular_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.Right)
+            {
+                tAmount.Focus();
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnAddParticular_Click_1(null, null);
+            }
+        }
+
+        private void btnPayor_Enter(object sender, EventArgs e)
+        {
+           
+            metroToolTip1.Show("Select Payor or Add new payor", btnPayor, btnPayor.Width,btnPayor.Height,10000000);
+            metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
+        }
+
+        private void btnPayor_Leave(object sender, EventArgs e)
+        {
+            metroToolTip1.Hide(btnPayor);
+        }
+
+        private void cmbParticular_Enter(object sender, EventArgs e)
+        {
+            metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
+            metroToolTip1.Show("Select Particular", cmbParticular, cmbParticular.Width, cmbParticular.Height, 10000000);
+        }
+
+        private void cmbParticular_Leave(object sender, EventArgs e)
+        {
+            metroToolTip1.Hide(cmbParticular);
+        }
+
+        private void tAmount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSave_Click(null,null);
+            }
+        }
+
+        private void tAmount_Enter(object sender, EventArgs e)
+        {
+            metroToolTip1.Style = MetroFramework.MetroColorStyle.Blue;
+            metroToolTip1.Show(" ** Enter to Submit ** \n Or Edit Amount ", tAmount, tAmount.Width / 2, 0, 10000000);
+        }
+
+        private void tAmount_Leave(object sender, EventArgs e)
+        {
+            metroToolTip1.Hide(tAmount);
+        }
+   
+
+     
 
 
 

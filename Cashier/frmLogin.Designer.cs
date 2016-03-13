@@ -41,7 +41,6 @@
             // 
             // tbUsername
             // 
-            this.tbUsername.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -58,7 +57,7 @@
             this.tbUsername.FontWeight = MetroFramework.MetroTextBoxWeight.Light;
             this.tbUsername.Icon = ((System.Drawing.Image)(resources.GetObject("tbUsername.Icon")));
             this.tbUsername.Lines = new string[0];
-            this.tbUsername.Location = new System.Drawing.Point(362, 253);
+            this.tbUsername.Location = new System.Drawing.Point(390, 175);
             this.tbUsername.MaximumSize = new System.Drawing.Size(221, 23);
             this.tbUsername.MaxLength = 360023;
             this.tbUsername.Name = "tbUsername";
@@ -79,7 +78,6 @@
             // 
             // tbPassword
             // 
-            this.tbPassword.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             // 
             // 
             // 
@@ -95,7 +93,7 @@
             this.tbPassword.DisplayIcon = true;
             this.tbPassword.Icon = ((System.Drawing.Image)(resources.GetObject("tbPassword.Icon")));
             this.tbPassword.Lines = new string[0];
-            this.tbPassword.Location = new System.Drawing.Point(362, 282);
+            this.tbPassword.Location = new System.Drawing.Point(390, 204);
             this.tbPassword.MaximumSize = new System.Drawing.Size(221, 23);
             this.tbPassword.MaxLength = 221;
             this.tbPassword.Name = "tbPassword";
@@ -116,9 +114,8 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLogin.BackColor = System.Drawing.Color.Chocolate;
-            this.btnLogin.Location = new System.Drawing.Point(508, 336);
+            this.btnLogin.Location = new System.Drawing.Point(536, 258);
             this.btnLogin.MaximumSize = new System.Drawing.Size(75, 23);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(75, 23);
@@ -130,11 +127,11 @@
             // 
             // label1
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semilight", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.DarkRed;
-            this.label1.Location = new System.Drawing.Point(358, 205);
+            this.label1.Location = new System.Drawing.Point(362, 132);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(282, 20);
             this.label1.TabIndex = 3;
@@ -142,49 +139,49 @@
             // 
             // metroLink1
             // 
-            this.metroLink1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroLink1.BackColor = System.Drawing.Color.Yellow;
-            this.metroLink1.FontWeight = MetroFramework.MetroLinkWeight.Light;
-            this.metroLink1.ForeColor = System.Drawing.Color.CadetBlue;
-            this.metroLink1.Location = new System.Drawing.Point(321, 375);
+            this.metroLink1.BackColor = System.Drawing.Color.Transparent;
+            this.metroLink1.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.metroLink1.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.metroLink1.Location = new System.Drawing.Point(309, 308);
             this.metroLink1.Name = "metroLink1";
-            this.metroLink1.Size = new System.Drawing.Size(124, 23);
+            this.metroLink1.Size = new System.Drawing.Size(164, 23);
             this.metroLink1.TabIndex = 4;
             this.metroLink1.Text = "Request an account";
+            this.metroLink1.UseCustomBackColor = true;
             this.metroLink1.UseCustomForeColor = true;
             this.metroLink1.UseSelectable = true;
             // 
             // metroLink2
             // 
-            this.metroLink2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroLink2.BackColor = System.Drawing.Color.Yellow;
-            this.metroLink2.FontWeight = MetroFramework.MetroLinkWeight.Light;
-            this.metroLink2.ForeColor = System.Drawing.Color.CadetBlue;
-            this.metroLink2.Location = new System.Drawing.Point(548, 375);
+            this.metroLink2.BackColor = System.Drawing.Color.Transparent;
+            this.metroLink2.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.metroLink2.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.metroLink2.Location = new System.Drawing.Point(595, 308);
             this.metroLink2.Name = "metroLink2";
             this.metroLink2.Size = new System.Drawing.Size(67, 23);
             this.metroLink2.TabIndex = 5;
             this.metroLink2.Text = "About";
+            this.metroLink2.UseCustomBackColor = true;
             this.metroLink2.UseCustomForeColor = true;
             this.metroLink2.UseSelectable = true;
             // 
             // metroLink3
             // 
-            this.metroLink3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroLink3.BackColor = System.Drawing.Color.Yellow;
-            this.metroLink3.FontWeight = MetroFramework.MetroLinkWeight.Light;
-            this.metroLink3.ForeColor = System.Drawing.Color.CadetBlue;
-            this.metroLink3.Location = new System.Drawing.Point(451, 375);
+            this.metroLink3.BackColor = System.Drawing.Color.Transparent;
+            this.metroLink3.FontSize = MetroFramework.MetroLinkSize.Medium;
+            this.metroLink3.ForeColor = System.Drawing.Color.DarkSlateGray;
+            this.metroLink3.Location = new System.Drawing.Point(479, 308);
             this.metroLink3.Name = "metroLink3";
             this.metroLink3.Size = new System.Drawing.Size(91, 23);
             this.metroLink3.TabIndex = 6;
             this.metroLink3.Text = "Developers";
+            this.metroLink3.UseCustomBackColor = true;
             this.metroLink3.UseCustomForeColor = true;
             this.metroLink3.UseSelectable = true;
             // 
             // progress
             // 
-            this.progress.Location = new System.Drawing.Point(451, 311);
+            this.progress.Location = new System.Drawing.Point(479, 233);
             this.progress.Maximum = 100;
             this.progress.Name = "progress";
             this.progress.Size = new System.Drawing.Size(32, 32);
@@ -197,18 +194,19 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.BackMaxSize = 1300;
             this.ClientSize = new System.Drawing.Size(991, 668);
-            this.Controls.Add(this.progress);
             this.Controls.Add(this.metroLink3);
-            this.Controls.Add(this.metroLink2);
-            this.Controls.Add(this.metroLink1);
+            this.Controls.Add(this.progress);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.tbPassword);
+            this.Controls.Add(this.metroLink1);
+            this.Controls.Add(this.metroLink2);
             this.Controls.Add(this.tbUsername);
             this.Name = "frmLogin";
+            this.Opacity = 0.5D;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -45,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_89E1F45F15FAB77C96DA233BE072C9BC"
+        "OwnerKey" = "8:_153B20C870BD429499D43C9A56365AE4"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_A8C5D1284749C42210C2D37263879689"
         "OwnerKey" = "8:_153B20C870BD429499D43C9A56365AE4"
         "MsmSig" = "8:_UNDEFINED"
@@ -100,6 +106,12 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_89E1F45F15FAB77C96DA233BE072C9BC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_2ADA67CBF4A1A4EB939B45D077102EA0"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -131,11 +143,16 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
                     {
                     "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
@@ -168,11 +185,16 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
+                    }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
                     {
                     "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
@@ -290,6 +312,37 @@
                     }
                 }
             "SourcePath" = "8:MetroFramework.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_23214799FD354EE68B49B81C2379E858"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_89E1F45F15FAB77C96DA233BE072C9BC"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Shortcut, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_89E1F45F15FAB77C96DA233BE072C9BC"
+                    {
+                    "Name" = "8:Shortcut.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Shortcut.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_23214799FD354EE68B49B81C2379E858"
@@ -445,15 +498,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Casheir"
-        "ProductCode" = "8:{123F7D52-D24B-432C-9096-E3278AC4BE83}"
-        "PackageCode" = "8:{5BABCBD6-D41F-4914-93D7-9A921D084BAF}"
+        "ProductCode" = "8:{4D29A833-F80E-4E2C-AD27-D5B34890E8EE}"
+        "PackageCode" = "8:{7E22E424-1F57-4AED-90AC-7D1872DEA6EB}"
         "UpgradeCode" = "8:{EC415217-10E6-45BD-AEE0-BCD41DA67CCF}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.0.1"
         "Manufacturer" = "8:Sorsogon State College Developers"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

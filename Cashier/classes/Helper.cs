@@ -15,7 +15,7 @@ namespace Cashier.classes
             if (text == "" || text == " ")
             {
                 if (hasMessage)
-                    MessageBox.Show("Empty Field");
+                    MessageBox.Show("There are some fields missing!");
 
                 return true;
             }

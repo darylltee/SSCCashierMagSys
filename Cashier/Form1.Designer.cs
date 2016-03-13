@@ -67,7 +67,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 70);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(150, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(843, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(843, 25);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -76,21 +76,23 @@
             this.fileToolStripMenuItem.BackColor = System.Drawing.Color.Turquoise;
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(39, 21);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // studentToolStripMenuItem
             // 
             this.studentToolStripMenuItem.BackColor = System.Drawing.Color.MediumAquamarine;
+            this.studentToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.studentToolStripMenuItem.Name = "studentToolStripMenuItem";
-            this.studentToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
+            this.studentToolStripMenuItem.Size = new System.Drawing.Size(63, 21);
             this.studentToolStripMenuItem.Text = "Student";
             // 
             // utilitiesToolStripMenuItem
@@ -99,14 +101,15 @@
             this.utilitiesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.reprintOPToolStripMenuItem,
             this.orderOfPaymentToolStripMenuItem});
+            this.utilitiesToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.utilitiesToolStripMenuItem.Name = "utilitiesToolStripMenuItem";
-            this.utilitiesToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.utilitiesToolStripMenuItem.Size = new System.Drawing.Size(61, 21);
             this.utilitiesToolStripMenuItem.Text = "Utilities";
             // 
             // reprintOPToolStripMenuItem
             // 
             this.reprintOPToolStripMenuItem.Name = "reprintOPToolStripMenuItem";
-            this.reprintOPToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.reprintOPToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.reprintOPToolStripMenuItem.Text = "Reprint OP";
             // 
             // orderOfPaymentToolStripMenuItem
@@ -115,41 +118,42 @@
             this.reissueToolStripMenuItem,
             this.reprintToolStripMenuItem});
             this.orderOfPaymentToolStripMenuItem.Name = "orderOfPaymentToolStripMenuItem";
-            this.orderOfPaymentToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.orderOfPaymentToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.orderOfPaymentToolStripMenuItem.Text = "Order Of Payment";
             // 
             // reissueToolStripMenuItem
             // 
             this.reissueToolStripMenuItem.Name = "reissueToolStripMenuItem";
-            this.reissueToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.reissueToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.reissueToolStripMenuItem.Text = "Re-issue";
             // 
             // reprintToolStripMenuItem
             // 
             this.reprintToolStripMenuItem.Name = "reprintToolStripMenuItem";
-            this.reprintToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.reprintToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.reprintToolStripMenuItem.Text = "Reprint";
             // 
             // developerToolStripMenuItem
             // 
-            this.developerToolStripMenuItem.BackColor = System.Drawing.Color.Salmon;
+            this.developerToolStripMenuItem.BackColor = System.Drawing.Color.MediumAquamarine;
             this.developerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.reportProblemToolStripMenuItem,
             this.requestAdditionalFeaturesToolStripMenuItem});
+            this.developerToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI Semilight", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.developerToolStripMenuItem.Name = "developerToolStripMenuItem";
-            this.developerToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
+            this.developerToolStripMenuItem.Size = new System.Drawing.Size(77, 21);
             this.developerToolStripMenuItem.Text = "Developer";
             // 
             // reportProblemToolStripMenuItem
             // 
             this.reportProblemToolStripMenuItem.Name = "reportProblemToolStripMenuItem";
-            this.reportProblemToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.reportProblemToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.reportProblemToolStripMenuItem.Text = "Report Problem or BUG";
             // 
             // requestAdditionalFeaturesToolStripMenuItem
             // 
             this.requestAdditionalFeaturesToolStripMenuItem.Name = "requestAdditionalFeaturesToolStripMenuItem";
-            this.requestAdditionalFeaturesToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.requestAdditionalFeaturesToolStripMenuItem.Size = new System.Drawing.Size(231, 22);
             this.requestAdditionalFeaturesToolStripMenuItem.Text = "Request Additional Features";
             // 
             // toolStrip1
@@ -163,7 +167,7 @@
             this.tspUpdate,
             this.tspView,
             this.tspDelete});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 94);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 95);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Padding = new System.Windows.Forms.Padding(150, 0, 1, 0);
             this.toolStrip1.Size = new System.Drawing.Size(843, 68);
@@ -199,13 +203,11 @@
             // tspAdd
             // 
             this.tspAdd.AutoSize = false;
-            this.tspAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tspAdd.Image = ((System.Drawing.Image)(resources.GetObject("tspAdd.Image")));
             this.tspAdd.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.tspAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tspAdd.Name = "tspAdd";
-            this.tspAdd.Size = new System.Drawing.Size(64, 64);
-            this.tspAdd.Text = "Add";
+            this.tspAdd.Size = new System.Drawing.Size(80, 64);
             this.tspAdd.Click += new System.EventHandler(this.tspAdd_Click);
             // 
             // tspUpdate
@@ -267,7 +269,7 @@
             this.btnUser.Image = ((System.Drawing.Image)(resources.GetObject("btnUser.Image")));
             this.btnUser.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUser.ImageSize = 32;
-            this.btnUser.Location = new System.Drawing.Point(616, 29);
+            this.btnUser.Location = new System.Drawing.Point(584, 29);
             this.btnUser.Name = "btnUser";
             this.btnUser.Size = new System.Drawing.Size(129, 38);
             this.btnUser.TabIndex = 4;

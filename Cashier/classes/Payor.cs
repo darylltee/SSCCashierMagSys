@@ -66,6 +66,21 @@ namespace Cashier.classes
             return isValid;
         }
 
+
+        public static bool validateCheckDetails(string bankname, string checkNo, string checkDate, string checkAmount)
+        {
+            bool isValid = false;
+
+            if (!Helper.strIsEmpty(bankname) && !Helper.strIsEmpty(checkNo) &&  !Helper.strIsEmpty(checkDate) && Helper.IsNumeric(checkAmount))
+            {
+                isValid = true;
+            }
+
+
+            return isValid;
+
+        }
+
         public static string[][] getCheckedItems(ListView lv)
         {
             // get the column and row count of the records

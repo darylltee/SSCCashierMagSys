@@ -19,6 +19,9 @@ namespace Cashier
         {
             InitializeComponent();
             Selected = s;
+
+            mtInfoOPIssued.Text += " ["+  DateTime.Now.ToShortDateString() +"]";
+            mtInfoOPPaid.Text += " [" + DateTime.Now.ToShortDateString() + "]";
         }
 
    
@@ -47,17 +50,35 @@ namespace Cashier
                     mtOP.Enabled = false;
                     mtCashier.Enabled = true;
                     mtReports.Enabled = true;
+                    mtOPSearch.Enabled = true;
+                    mtbCancelOR.Enabled = true;
                     break;
                 }
                 case ("Accounting"):
                 {
                     mtOP.Enabled = true;
                     mtCashier.Enabled = false;
+
                     mtReports.Enabled = false;
+                    mtOPSearch.Enabled = false;
+                    mtbCancelOR.Enabled = false;
                     break;
                 }
                     
             }
+        }
+
+        private void mtOPSearch_Click(object sender, EventArgs e)
+        {
+            frmPaymentGetOP f = new frmPaymentGetOP();
+
+            f.ShowDialog();
+        }
+
+        private void mtbCancelOR_Click(object sender, EventArgs e)
+        {
+            frmCancelOR f = new frmCancelOR();
+            f.ShowDialog();
         }
 
   

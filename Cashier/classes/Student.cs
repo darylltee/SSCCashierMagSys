@@ -11,6 +11,7 @@ namespace Cashier.classes
 
         public string[] studentData = new string[35];
         public int StudID;
+        public bool isStudent = false;
         // constructor
         public Student(string StudID = null)
         {
@@ -31,6 +32,22 @@ namespace Cashier.classes
             course = obj[0];
 
             return course;
+        }
+
+        public Student (Dictionary<string, string> data)
+        {
+            // Remember that the data format is :
+            // Index 0 will be the student Number 
+            // Index 1 will be the lastname
+            // Index 2 will be the firstname and middlename (because it's hard to identify the middlename and firstname)
+
+            if (new clsDB().Con().SelectData("SELECT StudID,StudNo,FName,MName,LName FROM student WHERE " + data.Keys.ToList()[0] + " = '" + data[data.Keys.ToList()[0]] + "' AND datalength(StudNo) > 0 OR LName = '" + data[data.Keys.ToList()[1]] + "' AND CONCAT(FName,' ', MName) = '" + data[data.Keys.ToList()[2]] + "' ", studentData))
+            {
+                isStudent = true;
+                StudID = int.Parse(studentData[0]);
+            }
+            else
+                isStudent = false;
         }
 
   

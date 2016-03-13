@@ -26,3 +26,8 @@ C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86
 C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.pdb
 C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.ReportTest.resources
 C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.frmLogin.resources
+C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.frmOPDetails.resources
+C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.frmDailyReportParticular.resources
+C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.frmPaymentGetOP.resources
+C:\Users\ICTserman\documents\visual studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.frmCancelOR.resources
+C:\Users\ICTserman\Documents\Visual Studio 2010\Projects\Cashier\Cashier\obj\x86\Debug\Cashier.csprojResolveAssemblyReference.cache

@@ -12,7 +12,7 @@ namespace Cashier
 {
     public partial class frmPayment : frmManageRecord
     {
-        public string sql = "SELECT TOP 50 OPNo, OP.Amount, CAST( CASE WHEN OP.Payor IS NULL OR OP.Payor = '' THEN CONCAT(FName,' ',MName,' ',LName) ELSE OP.Payor END AS varchar(100))  as Payor, CAST (CASE WHEN  PAID = 0 OR PAID IS NULL OR PAID = '' THEN 'Not Paid' ELSE 'Paid' END as varchar(10) ) as Paid From tbl_PayOrder as OP  JOIN Student as S ON S.StudID = OP.StudID ORDER BY OP.OPNo DESC";
+        public string sql = "SELECT TOP 50 OPNo, OP.Amount, CAST( CASE WHEN OP.Payor IS NULL OR OP.Payor = '' THEN CONCAT(FName,' ',MName,' ',LName) ELSE OP.Payor END AS varchar(100))  as Payor, CAST (CASE WHEN  PAID = 0 OR PAID IS NULL OR PAID = '' THEN 'Not Paid' ELSE 'Paid' END as varchar(10) ) as Paid From tbl_PayOrder as OP LEFT JOIN Student as S ON S.StudID = OP.StudID ORDER BY OP.OPNo DESC";
 
        
 
@@ -22,7 +22,10 @@ namespace Cashier
         public frmPayment()
         {
             InitializeComponent();
+
+           
             RefreshData(" ");
+           
         }
 
 
@@ -89,7 +92,7 @@ namespace Cashier
 
                 Dictionary<string, string> data = new Dictionary<string, string>();
 
-                new clsDB().Con().SelectDataDictionary("SELECT DISTINCT OP.SemNO , CONCAT(S.FName, ' ', S.MName,' ', S.LName, OP.Payor) as Payor,OP.DateIssued  FROM tbl_PayOrder as OP LEFT JOIN Student_Account as SA ON OP.StudID = SA.StudID LEFT JOIN Student as S ON S.StudID = OP.StudID WHERE OP.OPNo = " + orderOfPaymentID, data);
+                new clsDB().Con().SelectDataDictionary("SELECT DISTINCT OP.SemNO , OP.Payor as Payor,OP.DateIssued  FROM tbl_PayOrder as OP LEFT JOIN Student_Account as SA ON OP.StudID = SA.StudID LEFT JOIN Student as S ON S.StudID = OP.StudID WHERE OP.OPNo = " + orderOfPaymentID, data);
 
                 //new clsDB().Con().SelectDataDictionary("SELECT * FROM Student_Account as SA JOIN student as S on SA.StudID = S.StudID JOIN tbl_PayOrder as OP ON SA.StudID = OP.StudID  WHERE OP.OPNo = "+ orderOfPaymentID , data);
 
@@ -137,9 +140,6 @@ namespace Cashier
             }
             else
                 MessageBox.Show(" Please Select an item");
-
-
-            
         }
 
 
@@ -167,6 +167,15 @@ namespace Cashier
             else
                 RefreshData(sql);
         }
+
+        private void frmPayment_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+ 
 
         /*
          * 

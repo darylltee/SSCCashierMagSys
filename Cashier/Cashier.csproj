@@ -46,6 +46,10 @@
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Shortcut, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Shortcut.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -125,6 +129,18 @@
     <Compile Include="Controls\LollipopToggle.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="frmCancelOR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCancelOR.Designer.cs">
+      <DependentUpon>frmCancelOR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDailyReportParticular.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDailyReportParticular.Designer.cs">
+      <DependentUpon>frmDailyReportParticular.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmDataEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +176,12 @@
     </Compile>
     <Compile Include="frmMetroMainMenu.Designer.cs">
       <DependentUpon>frmMetroMainMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOPDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOPDetails.Designer.cs">
+      <DependentUpon>frmOPDetails.cs</DependentUpon>
     </Compile>
     <Compile Include="frmOrderOfPaymentPrint.cs">
       <SubType>Form</SubType>
@@ -209,6 +231,12 @@
     <Compile Include="frmPaymentDataEntry.Designer.cs">
       <DependentUpon>frmPaymentDataEntry.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmPaymentGetOP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPaymentGetOP.Designer.cs">
+      <DependentUpon>frmPaymentGetOP.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmPayorDataEntry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -241,9 +269,25 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SCIISDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="SCIISDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SCIISDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="SCIISDataSet2.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SCIISDataSet2.xsd</DependentUpon>
+    </Compile>
     <Compile Include="UIManagers\DrawHelper.cs" />
     <Compile Include="UIManagers\FontManager.cs" />
     <EmbeddedResource Include="classes\Report1.rdlc" />
+    <EmbeddedResource Include="frmCancelOR.resx">
+      <DependentUpon>frmCancelOR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDailyReportParticular.resx">
+      <DependentUpon>frmDailyReportParticular.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmDataEntry.resx">
       <DependentUpon>frmDataEntry.cs</DependentUpon>
     </EmbeddedResource>
@@ -261,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMetroMainMenu.resx">
       <DependentUpon>frmMetroMainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmOPDetails.resx">
+      <DependentUpon>frmOPDetails.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmOrderOfPaymentPrint.resx">
       <DependentUpon>frmOrderOfPaymentPrint.cs</DependentUpon>
@@ -285,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmPaymentDataEntry.resx">
       <DependentUpon>frmPaymentDataEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPaymentGetOP.resx">
+      <DependentUpon>frmPaymentGetOP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmPayorDataEntry.resx">
       <DependentUpon>frmPayorDataEntry.cs</DependentUpon>
@@ -351,6 +401,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Reports\DailyReport.rdlc" />
+    <EmbeddedResource Include="Reports\DailyReportParticular.rdlc" />
     <EmbeddedResource Include="ReportTest.resx">
       <DependentUpon>ReportTest.cs</DependentUpon>
     </EmbeddedResource>
@@ -366,6 +417,28 @@
     </None>
     <None Include="SCIISDataSet.xss">
       <DependentUpon>SCIISDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="SCIISDataSet1.xsc">
+      <DependentUpon>SCIISDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="SCIISDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SCIISDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SCIISDataSet1.xss">
+      <DependentUpon>SCIISDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="SCIISDataSet2.xsc">
+      <DependentUpon>SCIISDataSet2.xsd</DependentUpon>
+    </None>
+    <None Include="SCIISDataSet2.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>SCIISDataSet2.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="SCIISDataSet2.xss">
+      <DependentUpon>SCIISDataSet2.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup />

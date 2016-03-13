@@ -19,6 +19,10 @@ namespace Cashier
 
         public frmLogin(frmHome.MsgHandler s)
         {
+            clsCollection col = new clsCollection();
+
+            col.summaryOfCollection(3);
+
             InitializeComponent();
             Selected = s;
         }
@@ -54,6 +58,8 @@ namespace Cashier
                 btnLogin_Click(null, null);
             }
         }
+
+      
 
      
     }

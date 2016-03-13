@@ -26,7 +26,7 @@ namespace Cashier
         {
             InitializeComponent();
             this.Width = Screen.PrimaryScreen.Bounds.Width - (Screen.PrimaryScreen.Bounds.Width / 8);
-            this.Height = Screen.PrimaryScreen.Bounds.Height - (Screen.PrimaryScreen.Bounds.Height / 8); 
+            this.Height = Screen.PrimaryScreen.Bounds.Height - (Screen.PrimaryScreen.Bounds.Height / 24); 
             showOptions();
         }
 
@@ -49,6 +49,8 @@ namespace Cashier
             this.btnUser.Width += s.userData["fullname"].Length;
             this.lbDept.Text = s.userData["userDept"];
 
+            f.mtlUser.Text = s.userData["fullname"];
+
             f.WindowState = FormWindowState.Maximized;
             
         }
@@ -56,6 +58,7 @@ namespace Cashier
         private void Form1_Load(object sender, EventArgs e)
         {
             showLogin();
+            showUserOptions(false);
             showOptions();
         }
 
@@ -63,24 +66,28 @@ namespace Cashier
         {
             if (msg == "orderOfPayment")
             {
+                showUserOptions(true);
                 showManageOrderOfPayment();
             }
             else if (msg == "manageOrderOfPayment")
             {
+                showUserOptions(true);
                 showPaymentProcess();
             }
             else if (msg == "reports")
             {
+                showUserOptions(true);
                 showReports();
             }
             else if (msg == "home")
             {
                 btnUser.Tag = loginForm.userID;
-               
+                showUserOptions(true);
                 this.ActiveMdiChild.Close();
                 isLoggedIn = true;
+                showOptions(false);
                 showMenu();
-                showOptions(true);
+                
 
             }
             else
@@ -92,11 +99,13 @@ namespace Cashier
 
                 if (isLoggedIn)
                 {
-                    showOptions(true);
+                    showUserOptions(true);
+                    showOptions(false);
                     showMenu();
                 }
                 else
                 {
+                    showUserOptions(false);
                     showLogin();
                     showOptions();
                 }
@@ -109,7 +118,7 @@ namespace Cashier
             currForm = f;
             f.ControlBox = false;
             f.Show();
-            showOptions(true);
+           
             f.WindowState = FormWindowState.Maximized;
         }
 
@@ -122,6 +131,8 @@ namespace Cashier
         {
             frmLogin f = new frmLogin(new MsgHandler(showSelected));
             f.ControlBox = false;
+            f.Width = this.Width;
+            f.Height = this.Height - (fileToolStripMenuItem.Height + toolStrip1.Height);
             f.MdiParent = this;
             loginForm = f;
             showManaged(f);
@@ -132,14 +143,15 @@ namespace Cashier
             
             frmOrPayManageData f = frmOrPayManageData.CreateInstance();
             MsgHandler dbAction = new MsgHandler(f.DbAction);
-
+            showOptions(true);
             modDbAction = dbAction;
             f.MdiParent = this;
 
           //  f.lvManageRecord.Width = this.Width / 2;
             f.lvManageRecord.Height = this.Height - 295;
+           
             showManaged(f);
-            
+            f.manageTopMenu(toolStrip1);
         }
 
         private void showReports()
@@ -181,6 +193,11 @@ namespace Cashier
             toolStrip1.Items[4].Visible = show;
             toolStrip1.Items[5].Visible = show;
             toolStrip1.Items[6].Visible = show;
+            
+        }
+
+        private void showUserOptions(bool show = false)
+        {
             btnLogout.Visible = show;
             btnUser.Visible = show;
         }
@@ -208,15 +225,6 @@ namespace Cashier
         private void frmHome_FormClosing(object sender, FormClosingEventArgs e)
         {
             this.ShadowType = MetroFormShadowType.Flat;
-        }
-
-
-
-
-       
-
-
-
-        
+        }       
     }
 }

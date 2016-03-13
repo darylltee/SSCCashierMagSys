@@ -10,10 +10,19 @@ namespace Cashier.classes
     class StudentAccount
     {
         public int tuitionMarker;
-        public float total, tuitionFee, mscFee;
+        public float total, tuitionFee, mscFee, balance, payment, amount;
         public Dictionary<string, float> amountPerParticular = new Dictionary<string,float>();
         public Dictionary<string, string> data = new Dictionary<string,string>();
         public int[] seqNo = new int[20];
+        public bool hasNSTPPick = false;
+
+     
+
+
+        public StudentAccount(int StudID = 0)
+        {
+            
+        }
 
         public Dictionary<string, string> getData(string[][] qData)
         {
@@ -56,13 +65,24 @@ namespace Cashier.classes
             return data;
         }
 
+        public  bool hasNSTP(ListView lv)
+        {
+            bool isTrue = false;
+            if (lv.FindItemWithText("CWTS/ROTC").Index > 0)
+            {
+                isTrue = true;
+                hasNSTPPick = true;
+            }
 
-        public Dictionary<string, float> getAmountPerParticular(ListView lv, int startIndex = 3)
+            return isTrue;
+        }
+
+        public Dictionary<string, float> getAmountPerParticular(ListView lv, int startIndex = 3, string purpose = "")
         {
             // Problem with having same index since the index is a string so if multiple instance of the same name is entered only one remains (02/05/20
             
             // OTHER PAYMENTS
-            if (lv.CheckedItems.Count < 1)
+            if (lv.CheckedItems.Count < 1 && purpose == "" )
             {
                 for (int i = 0; i < lv.Items.Count; i++)
                 {
@@ -70,6 +90,15 @@ namespace Cashier.classes
                     {
                         if (lv.Items[i].SubItems[startIndex].Text != "Tuition Fee")
                         {
+                            foreach (string key in amountPerParticular.Keys)
+                            {
+                                if (key == lv.Items[i].SubItems[startIndex + 2].Text)
+                                {
+                                    amountPerParticular[key] += float.Parse(lv.Items[i].SubItems[startIndex + 3].Text);
+                                    continue;
+                                }
+                            }
+
                             amountPerParticular[lv.Items[i].SubItems[startIndex + 2].Text] = float.Parse(lv.Items[i].SubItems[startIndex + 3].Text);
                         }
                     }
@@ -85,7 +114,7 @@ namespace Cashier.classes
             // Payment for Tuition & Misc
             else
             {
-                for (int i = 0; i < lv.CheckedItems.Count; i++)
+                for (int i = 0; i < lv.Items.Count; i++)
                 {
 
                     float amount = float.Parse(lv.Items[i].SubItems[startIndex + 1].Text);
@@ -149,13 +178,14 @@ namespace Cashier.classes
 
 
 
-        public static bool updatePayment(int[] seqNo, int tuitionSeqNo, float payment, int StudID, float mscFee, int semNo)
+        public static bool updatePayment(int[] seqNo, int tuitionSeqNo, float payment, int StudID, float mscFee, int semNo, float checkAmount = 0)
         {
             // query for mscFee
             string queryMscFee = "UPDATE Student_Account SET Payment = Amount , Balance = (Amount - ISNULL(Payment,0)) WHERE StudID = " + StudID + " AND SeqNo != " + tuitionSeqNo + " AND SemNo = " + semNo;
 
             // query for tuitionFee
-            string queryTuitionFee = "UPDATE Student_Account SET Payment = ISNULL(Payment, 0 ) + (" + (payment - mscFee) + ") , Balance = (Amount -  (ISNULL(Payment,0) +" + (payment - mscFee) + " ) ) WHERE SeqNo = " + tuitionSeqNo + " AND StudID = " + StudID + " AND SemNo = " + semNo;
+            // Some adjustments for check payment
+            string queryTuitionFee = "UPDATE Student_Account SET Payment = ISNULL(Payment, 0 ) + (" + (payment - mscFee) + ") , Balance = (Amount -  (ISNULL(Payment,0) +" + (payment - mscFee) +  "   ) ) WHERE SeqNo = " + tuitionSeqNo + " AND StudID = " + StudID + " AND SemNo = " + semNo;
 
             // count seqNo
             int count = seqNo.Count();
@@ -180,14 +210,14 @@ namespace Cashier.classes
 
         
 
-        public static bool validateAmout(string paymentType, float totalFee, float paymentAmount, float tuitionFee, float mscFee)
+        public static bool validateAmout(string paymentType, float totalFee, float paymentAmount, float tuitionFee, float mscFee, bool isCheck = false)
         {
             bool isValid = false;
 
             // ----- VALIDATIONS --------
 
             // payment validatation
-            if (paymentAmount > totalFee && paymentType == "full")
+            if (paymentAmount > totalFee && paymentType == "full" && isCheck == false)
                 MessageBox.Show(" Payment is more than the total Fee");
 
             // Payment Type
@@ -207,7 +237,7 @@ namespace Cashier.classes
             }
             else
             {
-                if (paymentAmount != totalFee)
+                if (paymentAmount != totalFee && isCheck == false)
                     MessageBox.Show(" Payment Amount must be equal to the total amount");
                 else
                 {

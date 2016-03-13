@@ -16,12 +16,14 @@ namespace Cashier
         public float total;
         public int orderOfPaymentNo;
         public int listLength;
-
+         OrderOfPayment OP ;
+        public Dictionary<string, string> OPData ;
 
         public frmPaymentDataEntry()
         {
             InitializeComponent();
             tbORNo.Text = OrderOfPayment.getLastORNo();
+            OP = new OrderOfPayment();
             
         }
 
@@ -78,7 +80,7 @@ namespace Cashier
 
 
 
-                    if (StudentAccount.updatePayment(sa.seqNo, tuitionSeqNo, float.Parse(studentAccountData["amountNumeric"]), StudID, mFee, semNo))
+                    if (StudentAccount.updatePayment(sa.seqNo, tuitionSeqNo, float.Parse(tbAmount.Text), StudID, mFee, semNo))
                     {
                         hasPayment = true;
                     }
@@ -99,10 +101,17 @@ namespace Cashier
             // Final Procedure
             if (hasPayment)
             {
-               
-                OrderOfPayment OP = new OrderOfPayment();
-                Dictionary<string, string> OPData = OP.getOPData(orderOfPaymentNo);
-                clsCollection col = new clsCollection(orderOfPaymentNo, int.Parse(OrderOfPayment.getLastORNo()), dtORDate.Value.ToShortDateString(),float.Parse(OPData["Amount"]),OPData["Payor"]);
+                string checkAmount = null, checkDate = null, checkNo = null, bankName = null, PaymentType = null ;
+                
+                OPData.TryGetValue("CheckAmount", out checkAmount);
+                OPData.TryGetValue("CheckNo", out checkNo);
+                OPData.TryGetValue("CheckDate", out checkDate);
+                OPData.TryGetValue("BankName", out bankName);
+                 OPData.TryGetValue("PaymentType", out PaymentType);
+
+  
+
+                clsCollection col = new clsCollection(orderOfPaymentNo, int.Parse(OrderOfPayment.getLastORNo()), dtORDate.Value.ToShortDateString(), float.Parse(tbAmount.Text), OPData["Payor"].Replace("'","''"), checkNo,bankName, checkDate, float.Parse(checkAmount), int.Parse(PaymentType));
 
                 if (OP.updateOP(int.Parse(tbORNo.Text), orderOfPaymentNo))
                     if (col.create())
@@ -117,8 +126,13 @@ namespace Cashier
                         OPData["ORNumber"] = ""+currOrNumber;
                         
                         ePrinting print = new ePrinting(OPData, particularsAmount);
+                        
+                        // temporary fix for OTHER Payment
+                        if (OPData["Purpose"] == "Other Fees")
+                            print.isOtherPayment = true;
+
                         print.ePrint("OR");
-                        MessageBox.Show(" Account Updated!", " Success!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        
                         Close();
                     }
             }
@@ -132,12 +146,63 @@ namespace Cashier
         private void frmPaymentDataEntry_Load(object sender, EventArgs e)
         {
             lblAmountToPay.Text = total.ToString();
+            OPData = OP.getOPData(orderOfPaymentNo);
+
+            Dictionary<string, string> data = new Dictionary<string, string>();
+
+            new clsDB().Con().SelectDataDictionary("SELECT DISTINCT OP.SemNO , OP.Payor as Payor,OP.DateIssued  FROM tbl_PayOrder as OP LEFT JOIN Student_Account as SA ON OP.StudID = SA.StudID LEFT JOIN Student as S ON S.StudID = OP.StudID WHERE OP.OPNo = " + orderOfPaymentNo, data);
+
+            lbName.Text = data["Payor"];
+
+            DateTime dt = DateTime.Parse(data["DateIssued"]);
+
+            lbDate.Text = dt.ToString("MMMM dd, yyyy");
+
+
+            string query = "SELECT AcctCode, Particular, Amount FROM tbl_PayOrder_Details WHERE OPSeqNo = '" + orderOfPaymentNo + "'";
+
+            new clsDB().Con().FillLvw(listView1, query);
+
+            if (OP.hasCheck() && !string.IsNullOrEmpty(OPData["CheckNo"]) && OPData["CheckNo"] != "" && !Helper.strIsEmpty(OPData["CheckNo"]))
+            {
+                checkDetails.Visible = true;
+                lbCheckNo.Text = OPData["CheckNo"];
+                lbCheckDate.Text = OPData["CheckDate"];
+                lbBankName.Text = OPData["BankName"];
+                lbCheckAmount.Text = OPData["CheckAmount"];
+
+                tbAmount.Text = OPData["CheckAmount"];
+                tbAmount.Enabled = false;
+
+
+
+            }
+            else
+            {
+                particularBox.Location = new Point(particularBox.Location.X, particularBox.Location.Y - 60);
+                particularBox.Height += 63;
+                listView1.Height += 61;
+
+                //changeBox.Height += 30;
+                //changeBox.Location = new Point(changeBox.Location.X, changeBox.Location.Y - 50);
+                checkDetails.Visible = false;
+                tbAmount.Enabled = true;
+                tbAmount.Text = lblAmountToPay.Text;
+            }
         }
 
         private void tbAmount_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
                 btnSave_Click(null, null);
+        }
+
+        private void tbORNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSave_Click(null, null);
+            }
         }
 
   

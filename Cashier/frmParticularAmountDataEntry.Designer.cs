@@ -28,15 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label2 = new System.Windows.Forms.Label();
+            this.InfoText = new System.Windows.Forms.Label();
             this.tbAmount = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // label1
-            // 
-            this.label1.Font = new System.Drawing.Font("Calibri", 24F);
-            this.label1.Size = new System.Drawing.Size(408, 43);
             // 
             // btnSave
             // 
@@ -49,14 +44,14 @@
             this.btnCancel.Location = new System.Drawing.Point(350, 7);
             this.btnCancel.Size = new System.Drawing.Size(53, 28);
             // 
-            // label2
+            // InfoText
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 55);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(382, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "It seems like this particular assessment has no amount kindly input an amount :  " +
+            this.InfoText.AutoSize = true;
+            this.InfoText.Location = new System.Drawing.Point(12, 55);
+            this.InfoText.Name = "InfoText";
+            this.InfoText.Size = new System.Drawing.Size(421, 13);
+            this.InfoText.TabIndex = 3;
+            this.InfoText.Text = "It seems like this particular assessment has no amount kindly input an amount :  " +
     "";
             // 
             // tbAmount
@@ -65,7 +60,8 @@
             this.tbAmount.Location = new System.Drawing.Point(168, 84);
             this.tbAmount.Name = "tbAmount";
             this.tbAmount.Size = new System.Drawing.Size(226, 44);
-            this.tbAmount.TabIndex = 4;
+            this.tbAmount.TabIndex = 1;
+            this.tbAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbAmount_KeyPress);
             // 
             // label3
             // 
@@ -85,14 +81,13 @@
             this.ClientSize = new System.Drawing.Size(408, 144);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbAmount);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.InfoText);
             this.Name = "frmParticularAmountDataEntry";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Particular Amount";
-            this.Controls.SetChildIndex(this.label1, 0);
+            this.Load += new System.EventHandler(this.frmParticularAmountDataEntry_Load);
             this.Controls.SetChildIndex(this.btnSave, 0);
             this.Controls.SetChildIndex(this.btnCancel, 0);
-            this.Controls.SetChildIndex(this.label2, 0);
+            this.Controls.SetChildIndex(this.InfoText, 0);
             this.Controls.SetChildIndex(this.tbAmount, 0);
             this.Controls.SetChildIndex(this.label3, 0);
             this.ResumeLayout(false);
@@ -102,7 +97,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label InfoText;
         private System.Windows.Forms.TextBox tbAmount;
         private System.Windows.Forms.Label label3;
     }

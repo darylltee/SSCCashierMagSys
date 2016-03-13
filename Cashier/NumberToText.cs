@@ -13,15 +13,18 @@ namespace Cashier
             double val = Convert.ToDouble(numb);
             numb = string.Format("{0:########0.00}", val);
             int decimalPlace = numb.IndexOf(".");
+
             if (decimalPlace > 0)
             {
                 wholeNo = numb.Substring(0, decimalPlace);
                 points = numb.Substring(decimalPlace + 1);
             }
-             points = (points == "00") ? "" : " & " + points + "/100";
+             //points = (points == "00") ? "" : " & " + points + "/100";
+            points =  " & " + points + "/100";
 
             var numberText = new NumberText();
-            return numberText.ToText(Convert.ToInt32(wholeNo)) + " " + points + " Pesos Only";
+            //  return numberText.ToText(Convert.ToInt32(wholeNo)) + " " + points ;
+            return numberText.ToText(Convert.ToInt32(wholeNo)) + " " + points + " Only";
         }
     }
     public class NumberText

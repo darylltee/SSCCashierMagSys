@@ -14,16 +14,20 @@ namespace Cashier
     {
         public float amount;
         private int assessmentID;
-        public bool hasAmount = false;
+        public bool hasAmount = false, isTuitionFee = false;
+
 
         public frmParticularAmountDataEntry()
         {
             InitializeComponent();
+
         }
         public frmParticularAmountDataEntry(int assessmentID)
         {
             this.assessmentID = assessmentID;
             InitializeComponent();
+
+            
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -42,6 +46,20 @@ namespace Cashier
                 }
             }
             Close();
+        }
+
+        private void frmParticularAmountDataEntry_Load(object sender, EventArgs e)
+        {
+            if (isTuitionFee)
+                InfoText.Text = " Input Tuition Fee Amount ";
+        }
+
+        private void tbAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                btnSave_Click(null, null);
+            }
         }
 
  

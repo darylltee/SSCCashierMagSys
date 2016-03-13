@@ -12,10 +12,13 @@ namespace Cashier.classes
         {
 
             string connstr = Connect.ToDB();
-            clsADO db =  new clsADO(connstr);
+            clsADO db = new clsADO(connstr);
+
+           
 
             if (!db.checkConnection())
-                db = new clsADO(Connect.ToDB("DB-ALT"));
+                 db = new clsADO(Connect.ToDB("DB-ALT"));
+                 
 
             return db;
         }
